@@ -59,6 +59,10 @@ i {
   color: #b5b5b5;
 }
 
+.task {
+  align-items: center;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -99,6 +103,7 @@ li {
 
 i {
   font-size: 1rem;
+  text-align: center;
 }
 
 i:hover {

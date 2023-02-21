@@ -7,7 +7,7 @@ const { DefinePlugin } = require('webpack');
 
 module.exports = {
   // ...
-  mode: 'development',
+  mode: 'production',
   entry: [
     './src/index.js',
     'webpack/hot/dev-server.js',

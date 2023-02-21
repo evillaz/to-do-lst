@@ -9,12 +9,12 @@ const toDoTasks = [
   {
     description: 'wash the dishes',
     completed: true,
-    index: '0',
+    index: '3',
   },
   {
     description: 'complete To Do List project',
     completed: true,
-    index: '1',
+    index: '2',
   },
 ];
 
@@ -47,6 +47,7 @@ const setClearAll = () => {
 
 const loadToDoList = () => {
   list.innerHTML = '';
+  toDoTasks.sort( (a,b) => a.index - b.index);
   for (let i = 0; i < toDoTasks.length; i += 1) {
     setToDoList(toDoTasks[i]);
   }
