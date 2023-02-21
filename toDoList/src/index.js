@@ -47,7 +47,7 @@ const setClearAll = () => {
 
 const loadToDoList = () => {
   list.innerHTML = '';
-  toDoTasks.sort( (a,b) => a.index - b.index);
+  toDoTasks.sort((a, b) => a.index - b.index);
   for (let i = 0; i < toDoTasks.length; i += 1) {
     setToDoList(toDoTasks[i]);
   }

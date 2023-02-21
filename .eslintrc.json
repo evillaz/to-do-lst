@@ -14,5 +14,9 @@
       "import/no-import-module-exports" : "off",
       "import/no-unresolved" : "off",
       "import/extensions" : "off"
-    }
+    }, 
+    "ignorePatterns": [
+      "dist/",
+      "build/"
+    ]
 }
