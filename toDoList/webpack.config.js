@@ -11,7 +11,7 @@ module.exports = {
   entry: [
     './src/index.js',
     'webpack/hot/dev-server.js',
-    'webpack-dev-server/client/index.js?hot=true&live-reload=true'
+    'webpack-dev-server/client/index.js?hot=true&live-reload=true',
   ],
   output: {
     filename: 'bundle.js',
@@ -26,7 +26,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -36,7 +36,7 @@ module.exports = {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
-    ]
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),
