@@ -51,12 +51,12 @@ After you're finished please remove all the comments and instructions!
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 [WebPack Setup] <a name="about-project"></a>
+# 📖 [To Do List] <a name="about-project"></a>
 
-*WebPack Setup* is a simple repository to learn about setting up a project with webpack
+*To Do List* is a simple HTML list of To Do tasks.
 
-- Integrate linters to the project. Learned about it's importance and how to make a robust project implementing linters
-- Integrate webpack, too add a bundle.js, index.html and style.css into a dist folder
+- "To-do list" is a tool that helps to organize your day. It simply lists the things that you need to do and allows you to mark them as complete.
+
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -88,6 +88,9 @@ After you're finished please remove all the comments and instructions!
 ### Key Features <a name="key-features"></a>
 
 - **[Integrate webpack, too add a bundle.js, index.html and style.css into a dist folder]**
+- **[Function to iterate over the tasks array and populate an HTML list item element for each task.]**
+- **[On page load render the dynamically created list of tasks in the dedicated placeholder. The list should appear in order of the index values for each task.]**
+- **[Create a style.css and set rules for the To Do List. CSS must be loaded by Webpack Style/CSS Loader]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -95,7 +98,7 @@ After you're finished please remove all the comments and instructions!
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-<!-- - [Live Demo Link](https://yourdeployedapplicationlink.com) -->
+- [See our first Live Demo clicking here!](https://evillaz.github.io/to-do-lst/toDoList/dist/) 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -120,7 +123,7 @@ Example commands:
 
 ```sh
   cd my-folder
-  git clone git@github.com:evillaz/awesome-books.git
+  git clone git@github.com:evillaz/to-do-lst.git
 ```
 
 ### Install
@@ -175,7 +178,11 @@ Visual studio code, another realiable code editor or a Web browser
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- This was an enclosed activity no future features will be uploaded
+- Adding a new item.
+- Removing a selected item.
+- Marking a selected item as complete.
+- Removing all items marked as complete at once.
+- Reordering a selected item (as drag-and-drop) [as an additional feature].
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
