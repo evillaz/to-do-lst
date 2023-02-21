@@ -51,14 +51,12 @@ After you're finished please remove all the comments and instructions!
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 [Awesome Books] <a name="about-project"></a>
+# 📖 [WebPack Setup] <a name="about-project"></a>
 
-*Awesome Books* is a simple website that displays a list of books and allows you to add and remove books from that list. By building this application, you will learn how to manage data using JavaScript. Thanks to that your website will be more interactive. You will also use a medium-fidelity wireframe to build the UI.
+*WebPack Setup* is a simple repository to learn about setting up a project with webpack
 
 - Integrate linters to the project. Learned about it's importance and how to make a robust project implementing linters
-- Implement js to manipulate data and create dynamic pages
-- Accomplish the requirements through a project based on the HTML and CSS
-- Apply ES6 as a new trend on JS structure
+- Integrate webpack, too add a bundle.js, index.html and style.css into a dist folder
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -74,14 +72,14 @@ After you're finished please remove all the comments and instructions!
 <details>
   <summary>Server</summary>
   <ul>
-    <li><a href="https://expressjs.com/">Express.js</a></li>
+    <li><a href="https://webpack.js.org/configuration/dev-server/">Webpack Dev Server</a></li>
   </ul>
 </details>
 
 <details>
 <summary>Database</summary>
   <ul>
-    <li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
+    <li>No database used</li>
   </ul>
 </details>
 
@@ -89,17 +87,13 @@ After you're finished please remove all the comments and instructions!
 
 ### Key Features <a name="key-features"></a>
 
-- **[List book library]**
-- **[Add a new book to the library]**
-- **[Remove a selected book from the library]**
+- **[Integrate webpack, too add a bundle.js, index.html and style.css into a dist folder]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LIVE DEMO -->
 
 ## 🚀 Live Demo <a name="live-demo"></a>
-
-> [Use this link to see our live demo!!](https://evillaz.github.io/awesome-books/AwesomeBooks/)
 
 <!-- - [Live Demo Link](https://yourdeployedapplicationlink.com) -->
 
@@ -131,49 +125,30 @@ Example commands:
 
 ### Install
 
-Only running the html file would be enough!
-<!--
+Run this command: 
+
 Example command:
 
 ```sh
-  cd my-project
-  gem install
+  cd toDoList
+  npm start
 ```
---->
+
 
 ### Usage
 
-To run the project, execute the html file.
-And navigate through the "List", "Add New" and "Contact" tabs on the navigation bar.
- 
-- **Add New:** Add new books, with the respective authors, to the library.
-- **List:** Check books list from the library
-- **Contact:** Check our contact info
+Run this command: 
 
-<!--
 Example command:
 
 ```sh
-  rails server
+  cd toDoList
+  npm start
 ```
---->
+
 
 ### Run tests
 
-To run tests:
-
-1. Go to the "Add New" tab on the navigation bar.
-2. Try adding new books with the respective author.
-3. Go to the "List" tab on the navigation bar.
-4. Try remove a book from the List.
-5. By clicking on remove shuld remove the selected book from the list.
-
-<!--Example command:
-
-```
-  git status
-```
---->
 
 ### Deployment
 
@@ -187,12 +162,6 @@ Visual studio code, another realiable code editor or a Web browser
 <!-- AUTHORS -->
 
 ## 👥 Authors <a name="authors"></a>
-
-👤 **Jorum Odiemo**
-
-- GitHub: [@githubhandle](https://github.com/JOdiemo)
-- Twitter: [@twitterhandle](https://twitter.com/jorumodiemo)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/jorumodiemo)
 
 👤 **Eduardo Villarreal**
 
