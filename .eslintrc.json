@@ -1,0 +1,22 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "rules": {
+      "import/no-import-module-exports" : "off",
+      "import/no-unresolved" : "off",
+      "import/extensions" : "off"
+    }, 
+    "ignorePatterns": [
+      "dist/",
+      "build/"
+    ]
+}
