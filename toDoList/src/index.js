@@ -1,22 +1,13 @@
 import './style.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+import ToDoList from './toDoList';
+import { addTask } from './CRUD';
 
 if (module.hot) {
   module.hot.accept();
 }
 
-const toDoTasks = [
-  {
-    description: 'wash the dishes',
-    completed: true,
-    index: '3',
-  },
-  {
-    description: 'complete To Do List project',
-    completed: true,
-    index: '2',
-  },
-];
+const toDoList = new ToDoList();
 
 const list = document.getElementById('placeholder');
 
@@ -47,11 +38,27 @@ const setClearAll = () => {
 
 const loadToDoList = () => {
   list.innerHTML = '';
-  toDoTasks.sort((a, b) => a.index - b.index);
-  for (let i = 0; i < toDoTasks.length; i += 1) {
-    setToDoList(toDoTasks[i]);
+  if (localStorage.getItem('toDoList') == null) {
+    toDoList.toDoTasks = [];
+  } else {
+    toDoList.toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
+  }
+
+  toDoList.toDoTasks = toDoList.toDoTasks.sort((a, b) => a.index - b.index);
+  localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
+  length = toDoList.toDoTasks.length;
+  for (let i = 0; i < length; i += 1) {
+    setToDoList(toDoList.toDoTasks[i]);
   }
   list.appendChild(setClearAll());
 };
 
+const addBtn = document.getElementById('addButton');
+addBtn.addEventListener('click', () => {
+  addTask();
+})
+
 loadToDoList();
+
+export {loadToDoList};
+export {toDoList};
