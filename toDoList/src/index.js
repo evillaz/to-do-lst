@@ -1,7 +1,6 @@
 import './style.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import ToDoList from './toDoList';
-import { addTask } from './CRUD';
 
 if (module.hot) {
   module.hot.accept();
@@ -12,16 +11,23 @@ const toDoList = new ToDoList();
 const list = document.getElementById('placeholder');
 
 const addListContent = (toDoTask) => `<div class="inputHolder flex">
-            <input type="checkbox" class="${toDoTask.completed}" id="taskItem${toDoTask.index}" name="taskItem${toDoTask.index}">
-            <label for="taskItem${toDoTask.index}">${toDoTask.description}</label>
+            <label class="custom-checkbox">
+              <input type="checkbox" class="${toDoTask.completed} checkBox" id="taskItem${toDoTask.index}" name="taskItem${toDoTask.index}">
+              <span class="checkmark"></span>
+            </label>
+            <label class="taskText" for="taskItem${toDoTask.index}">${toDoTask.description}</label>
           </div>
-          <i class="fa-solid fa-ellipsis-vertical"></i>
+          <div class="icons">
+            <i id="elipsis" class="fa-solid fa-ellipsis-vertical move elipsis"></i>
+            <i id="trash" class="fa-solid fa-trash-can remove hidden "></i>
+          </div>
           `;
 
 const setListItem = (toDoTask) => {
   const listItem = document.createElement('li');
   listItem.className = 'task flex';
   listItem.innerHTML = addListContent(toDoTask);
+  listItem.id = toDoTask.index;
   return listItem;
 };
 
@@ -46,19 +52,14 @@ const loadToDoList = () => {
 
   toDoList.toDoTasks = toDoList.toDoTasks.sort((a, b) => a.index - b.index);
   localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
-  length = toDoList.toDoTasks.length;
-  for (let i = 0; i < length; i += 1) {
+  const arrayLength = toDoList.toDoTasks.length;
+  for (let i = 0; i < arrayLength; i += 1) {
     setToDoList(toDoList.toDoTasks[i]);
   }
   list.appendChild(setClearAll());
 };
 
-const addBtn = document.getElementById('addButton');
-addBtn.addEventListener('click', () => {
-  addTask();
-})
-
 loadToDoList();
 
-export {loadToDoList};
-export {toDoList};
+export { loadToDoList };
+export { toDoList };
