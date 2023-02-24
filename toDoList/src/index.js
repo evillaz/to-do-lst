@@ -137,7 +137,7 @@ document.addEventListener('change', (e) => {
 
 const refreshButton = document.querySelector('#refresh');
 refreshButton.addEventListener('click', () => {
-  let rotation =0;
+  let rotation = 0;
   const intervalId = setInterval(() => {
     rotation += 20;
     refreshButton.style.transform = `rotate(${rotation}deg)`;
@@ -153,5 +153,4 @@ refreshButton.addEventListener('click', () => {
   toDoList.toDoTasks = [];
   localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
   loadToDoList();
-
 });
