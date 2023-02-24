@@ -1,36 +1,39 @@
 import './style.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+import ToDoList from './toDoList';
+import {
+  newTask, removeTask, addNewDescription, toggleElements,
+} from './CRUD';
 
 if (module.hot) {
   module.hot.accept();
 }
 
-const toDoTasks = [
-  {
-    description: 'wash the dishes',
-    completed: true,
-    index: '3',
-  },
-  {
-    description: 'complete To Do List project',
-    completed: true,
-    index: '2',
-  },
-];
+const toDoList = new ToDoList();
 
 const list = document.getElementById('placeholder');
 
 const addListContent = (toDoTask) => `<div class="inputHolder flex">
-            <input type="checkbox" class="${toDoTask.completed}" id="taskItem${toDoTask.index}" name="taskItem${toDoTask.index}">
-            <label for="taskItem${toDoTask.index}">${toDoTask.description}</label>
+            <label class="custom-checkbox">
+              <input type="checkbox" class="${toDoTask.completed} checkBox" id="taskItem${toDoTask.index}" name="taskItem${toDoTask.index}">
+              <span class="checkmark"></span>
+            </label>
+            <div class="view">
+              <label class="labelText taskText">${toDoTask.description}</label>
+              <textarea class="textArea taskText hidden" type="text">${toDoTask.description}</textarea>
+            </div>
           </div>
-          <i class="fa-solid fa-ellipsis-vertical"></i>
+          <div class="icons">
+            <i id="elipsis" class="fa-solid fa-ellipsis-vertical move elipsis"></i>
+            <i id="trash" class="fa-solid fa-trash-can remove hidden "></i>
+          </div>
           `;
 
 const setListItem = (toDoTask) => {
   const listItem = document.createElement('li');
   listItem.className = 'task flex';
   listItem.innerHTML = addListContent(toDoTask);
+  listItem.id = toDoTask.index;
   return listItem;
 };
 
@@ -47,11 +50,71 @@ const setClearAll = () => {
 
 const loadToDoList = () => {
   list.innerHTML = '';
-  toDoTasks.sort((a, b) => a.index - b.index);
-  for (let i = 0; i < toDoTasks.length; i += 1) {
-    setToDoList(toDoTasks[i]);
+  if (localStorage.getItem('toDoList') == null) {
+    toDoList.toDoTasks = [];
+  } else {
+    toDoList.toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
+  }
+  toDoList.toDoTasks = toDoList.toDoTasks.sort((a, b) => a.index - b.index);
+  localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
+  const arrayLength = toDoList.toDoTasks.length;
+  for (let i = 0; i < arrayLength; i += 1) {
+    setToDoList(toDoList.toDoTasks[i]);
   }
   list.appendChild(setClearAll());
 };
 
-loadToDoList();
+const addBtn = document.getElementById('addButton');
+addBtn.addEventListener('click', (e) => {
+  const parentContainer = e.target.closest('.addTasks');
+  const taskDescriptionInput = parentContainer.querySelector('#addTask').value;
+  newTask(taskDescriptionInput);
+  parentContainer.querySelector('#addTask').value = '';
+  loadToDoList();
+});
+
+const taskContainer = document.querySelector('#placeholder');
+
+taskContainer.addEventListener('click', (e) => {
+  if (e.target.matches('.labelText')) {
+    toggleElements(e.target, '#fffeca');
+  }
+  if (e.target.matches('#trash')) {
+    const removeID = e.target.closest('.task').getAttribute('id') - 1;
+    removeTask(removeID);
+    loadToDoList();
+  }
+});
+
+document.addEventListener('click', (e) => {
+  const toggledTask = document.querySelectorAll('.labelText');
+  toggledTask.forEach((toggle) => {
+    if (toggle.classList.contains('hidden')) {
+      const toggledParent = toggle.closest('.task');
+      if (!toggledParent.contains(e.target)) {
+        toggleElements(toggle, '#fff');
+        addNewDescription(toggle);
+      }
+    }
+  });
+});
+
+document.addEventListener('keydown', (k) => {
+  if (k.target.classList.contains('textArea') && k.key === 'Enter') {
+    k.preventDefault();
+    addNewDescription(k.target);
+    toggleElements(k.target, '#fff');
+  }
+  if ((k.target.id == 'addTask') && k.key === 'Enter') {
+    k.preventDefault();
+    const parentContainer = k.target.closest('.addTasks');
+    const taskDescriptionInput = parentContainer.querySelector('#addTask').value;
+    newTask(taskDescriptionInput);
+    parentContainer.querySelector('#addTask').value = '';
+    loadToDoList();
+  }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadToDoList();
+});

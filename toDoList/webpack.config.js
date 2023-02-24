@@ -10,11 +10,12 @@ module.exports = {
   mode: 'production',
   entry: [
     './src/index.js',
+    './src/CRUD.js',
     'webpack/hot/dev-server.js',
     'webpack-dev-server/client/index.js?hot=true&live-reload=true',
   ],
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   devServer: {
