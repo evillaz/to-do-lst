@@ -105,6 +105,14 @@ document.addEventListener('keydown', (k) => {
     addNewDescription(k.target);
     toggleElements(k.target, '#fff');
   }
+  if ((k.target.id == 'addTask') && k.key === 'Enter') {
+    k.preventDefault();
+    const parentContainer = k.target.closest('.addTasks');
+    const taskDescriptionInput = parentContainer.querySelector('#addTask').value;
+    newTask(taskDescriptionInput);
+    parentContainer.querySelector('#addTask').value = '';
+    loadToDoList();
+  }
 });
 
 window.addEventListener('DOMContentLoaded', () => {
