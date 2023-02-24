@@ -206,3 +206,23 @@ i:hover:not(.move) {
   display: flex;
   z-index: 2;
 }
+
+.lineThrough {
+  text-decoration: line-through;
+}
+
+.dragging {
+  background-color: blue;
+  color: white;
+  opacity: 1;
+}
+
+[draggable="true"] {
+  /*
+ To prevent user selecting inside the drag source
+*/
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

@@ -4,6 +4,11 @@ import ToDoList from './toDoList';
 import {
   newTask, removeTask, addNewDescription, toggleElements,
 } from './CRUD';
+import {
+  checkStatus,
+  changeStatus,
+  filterCompleted,
+} from './statusUpdate';
 
 if (module.hot) {
   module.hot.accept();
@@ -62,7 +67,13 @@ const loadToDoList = () => {
     setToDoList(toDoList.toDoTasks[i]);
   }
   list.appendChild(setClearAll());
+  const checkBoxes = document.querySelectorAll('.checkBox');
+  checkBoxes.forEach((check) => {
+    checkStatus(check);
+  });
 };
+
+loadToDoList();
 
 const addBtn = document.getElementById('addButton');
 addBtn.addEventListener('click', (e) => {
@@ -82,6 +93,10 @@ taskContainer.addEventListener('click', (e) => {
   if (e.target.matches('#trash')) {
     const removeID = e.target.closest('.task').getAttribute('id') - 1;
     removeTask(removeID);
+    loadToDoList();
+  }
+  if (e.target.matches('.clearAll')) {
+    filterCompleted();
     loadToDoList();
   }
 });
@@ -105,7 +120,7 @@ document.addEventListener('keydown', (k) => {
     addNewDescription(k.target);
     toggleElements(k.target, '#fff');
   }
-  if ((k.target.id == 'addTask') && k.key === 'Enter') {
+  if ((k.target.id === 'addTask') && k.key === 'Enter') {
     k.preventDefault();
     const parentContainer = k.target.closest('.addTasks');
     const taskDescriptionInput = parentContainer.querySelector('#addTask').value;
@@ -115,6 +130,27 @@ document.addEventListener('keydown', (k) => {
   }
 });
 
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('change', (e) => {
+  changeStatus(e.target);
+  loadToDoList();
+});
+
+const refreshButton = document.querySelector('#refresh');
+refreshButton.addEventListener('click', () => {
+  let rotation = 0;
+  const intervalId = setInterval(() => {
+    rotation += 20;
+    refreshButton.style.transform = `rotate(${rotation}deg)`;
+  }, 20);
+
+  // do some refreshing action here
+  setTimeout(() => {
+    // stop rotating
+    clearInterval(intervalId);
+    refreshButton.style.transform = '';
+  }, 300);
+
+  toDoList.toDoTasks = [];
+  localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
   loadToDoList();
 });
