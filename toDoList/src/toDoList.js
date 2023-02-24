@@ -8,6 +8,7 @@ class ToDoList {
   addTask(completed, description, index) {
     if (completed !== '' && description !== '' && index !== '') {
       const task = new Task(completed, description, index);
+      this.toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
       this.toDoTasks.push(task);
       localStorage.setItem('toDoList', JSON.stringify(this.toDoTasks));
     }
