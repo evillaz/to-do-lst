@@ -1,73 +1,44 @@
 import ToDoList from './toDoList';
-import { loadToDoList } from './index';
 
 const toDoList = new ToDoList();
-if (localStorage.getItem('toDoList') == null) {
-  toDoList.toDoTasks = [];
-} else {
-  toDoList.toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
-}
-const addBtn = document.getElementById('addButton');
-addBtn.addEventListener('click', () => {
-  const description = document.getElementById('addTask').value;
+
+const newTask = (description) => {
   const completedDefault = false;
   const index = toDoList.toDoTasks.length + 1;
   toDoList.addTask(completedDefault, description, index);
-  document.getElementById('addTask').value = '';
-  loadToDoList();
-});
+};
 
-const taskContainer = document.querySelector('#placeholder');
-taskContainer.addEventListener('click', (e) => {
-  if (e.target.classList.contains('remove')) {
-    const taskId = e.target.parentNode.parentNode.getAttribute('id') - 1;
-    toDoList.remove(taskId);
-    localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
-    loadToDoList();
-  }
-  if (e.target.classList.contains('taskText')) {
-    const parent = e.target.parentElement.parentElement;
-    parent.style.backgroundColor = '#fffeca';
-    const icons = parent.querySelectorAll('i');
-    icons.forEach((i) => {
-      i.classList.toggle('hidden');
-    });
-    const currentValue = e.target.innerText;
-    const inputElement = document.createElement('input');
-    inputElement.className = 'newTaskText';
-    inputElement.type = 'text';
-    inputElement.value = currentValue;
-    e.target.replaceWith(inputElement);
-    inputElement.focus();
+const removeTask = (index) => {
+  toDoList.remove(index);
+};
 
-    let keyDownOcurred = false;
+const toggleHidden = (elements) => {
+  elements.forEach((el) => {
+    el.classList.toggle('hidden');
+  });
+};
 
-    const finishEdit = () => {
-      const newLabel = document.createElement('label');
-      newLabel.className = 'taskText';
-      newLabel.innerText = inputElement.value;
-      inputElement.replaceWith(newLabel);
-      const taskID = newLabel.parentNode.parentNode.getAttribute('id') - 1;
-      toDoList.toDoTasks[taskID].description = newLabel.innerText;
-      localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
-    };
+const toggleElements = (target, background) => {
+  const parentNode = target.closest('.task');
+  const toogleText = parentNode.querySelectorAll('.taskText');
+  const toggleIcons = parentNode.querySelectorAll('i');
+  toggleHidden(toogleText);
+  toggleHidden(toggleIcons);
+  parentNode.style.backgroundColor = background;
+};
 
-    inputElement.addEventListener('keydown', (x) => {
-      if (x.key === 'Enter') {
-        x.preventDefault();
-        keyDownOcurred = true;
-        finishEdit();
-      }
-    });
+const addNewDescription = (target) => {
+  const targetParent = target.closest('.task');
+  const newTextInput = targetParent.querySelector('.labelText');
+  newTextInput.innerText = targetParent.querySelector('.textArea').value;
+  const editedTaskID = targetParent.getAttribute('id') - 1;
+  toDoList.toDoTasks[editedTaskID].description = newTextInput.innerText;
+  localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
+};
 
-    inputElement.addEventListener('blur', () => {
-      parent.style.backgroundColor = '#fff';
-      icons.forEach((i) => {
-        i.classList.toggle('hidden');
-      });
-      if (!keyDownOcurred) {
-        finishEdit();
-      }
-    });
-  }
-});
+export {
+  newTask,
+  removeTask,
+  toggleElements,
+  addNewDescription,
+};

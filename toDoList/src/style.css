@@ -11,9 +11,10 @@ body {
   height: 100vh;
 }
 
-input[type="text"] {
+.labelText {
   font-family: sans-serif;
   font-size: 1rem;
+  height: 1rem;
 }
 
 main {
@@ -47,6 +48,18 @@ main {
 
 .addTasks label {
   width: 100%;
+}
+
+.textArea {
+  border: none !important;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  overflow: hidden;
+  resize: none;
+  font-family: sans-serif;
+  font-size: 1rem;
+  height: 1rem;
 }
 
 #addTask,
@@ -182,4 +195,14 @@ i:hover:not(.move) {
 
 .custom-checkbox input:checked ~ .checkmark::before {
   display: block;
+}
+
+.view,
+.view .taskText {
+  width: 100%;
+}
+
+.view {
+  display: flex;
+  z-index: 2;
 }

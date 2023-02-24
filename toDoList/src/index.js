@@ -1,6 +1,9 @@
 import './style.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import ToDoList from './toDoList';
+import {
+  newTask, removeTask, addNewDescription, toggleElements,
+} from './CRUD';
 
 if (module.hot) {
   module.hot.accept();
@@ -15,7 +18,10 @@ const addListContent = (toDoTask) => `<div class="inputHolder flex">
               <input type="checkbox" class="${toDoTask.completed} checkBox" id="taskItem${toDoTask.index}" name="taskItem${toDoTask.index}">
               <span class="checkmark"></span>
             </label>
-            <label class="taskText" for="taskItem${toDoTask.index}">${toDoTask.description}</label>
+            <div class="view">
+              <label class="labelText taskText">${toDoTask.description}</label>
+              <textarea class="textArea taskText hidden" type="text">${toDoTask.description}</textarea>
+            </div>
           </div>
           <div class="icons">
             <i id="elipsis" class="fa-solid fa-ellipsis-vertical move elipsis"></i>
@@ -49,7 +55,6 @@ const loadToDoList = () => {
   } else {
     toDoList.toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
   }
-
   toDoList.toDoTasks = toDoList.toDoTasks.sort((a, b) => a.index - b.index);
   localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
   const arrayLength = toDoList.toDoTasks.length;
@@ -59,7 +64,49 @@ const loadToDoList = () => {
   list.appendChild(setClearAll());
 };
 
-loadToDoList();
+const addBtn = document.getElementById('addButton');
+addBtn.addEventListener('click', (e) => {
+  const parentContainer = e.target.closest('.addTasks');
+  const taskDescriptionInput = parentContainer.querySelector('#addTask').value;
+  newTask(taskDescriptionInput);
+  parentContainer.querySelector('#addTask').value = '';
+  loadToDoList();
+});
 
-export { loadToDoList };
-export { toDoList };
+const taskContainer = document.querySelector('#placeholder');
+
+taskContainer.addEventListener('click', (e) => {
+  if (e.target.matches('.labelText')) {
+    toggleElements(e.target, '#fffeca');
+  }
+  if (e.target.matches('#trash')) {
+    const removeID = e.target.closest('.task').getAttribute('id') - 1;
+    removeTask(removeID);
+    loadToDoList();
+  }
+});
+
+document.addEventListener('click', (e) => {
+  const toggledTask = document.querySelectorAll('.labelText');
+  toggledTask.forEach((toggle) => {
+    if (toggle.classList.contains('hidden')) {
+      const toggledParent = toggle.closest('.task');
+      if (!toggledParent.contains(e.target)) {
+        toggleElements(toggle, '#fff');
+        addNewDescription(toggle);
+      }
+    }
+  });
+});
+
+document.addEventListener('keydown', (k) => {
+  if (k.target.classList.contains('textArea') && k.key === 'Enter') {
+    k.preventDefault();
+    addNewDescription(k.target);
+    toggleElements(k.target, '#fff');
+  }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadToDoList();
+});
