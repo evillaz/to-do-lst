@@ -134,3 +134,24 @@ document.addEventListener('change', (e) => {
   changeStatus(e.target);
   loadToDoList();
 });
+
+const refreshButton = document.querySelector('#refresh');
+refreshButton.addEventListener('click', () => {
+  let rotation =0;
+  const intervalId = setInterval(() => {
+    rotation += 20;
+    refreshButton.style.transform = `rotate(${rotation}deg)`;
+  }, 20);
+
+  // do some refreshing action here
+  setTimeout(() => {
+    // stop rotating
+    clearInterval(intervalId);
+    refreshButton.style.transform = '';
+  }, 300);
+
+  toDoList.toDoTasks = [];
+  localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
+  loadToDoList();
+
+});
