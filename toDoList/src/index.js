@@ -154,3 +154,5 @@ refreshButton.addEventListener('click', () => {
   localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
   loadToDoList();
 });
+
+export {loadToDoList}
