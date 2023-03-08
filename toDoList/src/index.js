@@ -1,5 +1,5 @@
-import './style.css';
-import '@fortawesome/fontawesome-free/css/all.css';
+// import './style.css';
+// import '@fortawesome/fontawesome-free/css/all.css';
 import ToDoList from './toDoList';
 import {
   newTask, removeTask, addNewDescription, toggleElements,

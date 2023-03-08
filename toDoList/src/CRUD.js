@@ -3,7 +3,7 @@ import ToDoList from './toDoList';
 const toDoList = new ToDoList();
 
 const newTask = (description) => {
-  toDoList.toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
+  toDoList.toDoTasks = JSON.parse(localStorage.getItem('toDoList')) || [];
   const completedDefault = false;
   const index = toDoList.toDoTasks.length + 1;
   toDoList.addTask(completedDefault, description, index);
