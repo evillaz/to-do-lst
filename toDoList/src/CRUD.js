@@ -1,5 +1,3 @@
-const toDoTasks = JSON.parse(localStorage.getItem('toDoList')) || [];
-
 const toggleHidden = (elements) => {
   elements.forEach((el) => {
     el.classList.toggle('hidden');
@@ -15,16 +13,4 @@ const toggleElements = (target, background) => {
   parentNode.style.backgroundColor = background;
 };
 
-const addNewDescription = (target) => {
-  const targetParent = target.closest('.task');
-  const newTextInput = targetParent.querySelector('.labelText');
-  newTextInput.innerText = targetParent.querySelector('.textArea').value;
-  const editedTaskID = targetParent.getAttribute('id') - 1;
-  toDoTasks[editedTaskID].description = newTextInput.innerText;
-  localStorage.setItem('toDoList', JSON.stringify(toDoTasks));
-};
-
-export {
-  toggleElements,
-  addNewDescription,
-};
+export default toggleElements;

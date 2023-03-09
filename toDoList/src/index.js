@@ -1,8 +1,6 @@
 import './style.css';
 import '@fortawesome/fontawesome-free/css/all.css';
-import {
-  addNewDescription, toggleElements,
-} from './CRUD';
+import toggleElements from './CRUD';
 import {
   checkStatus,
   changeStatus,
@@ -10,6 +8,7 @@ import {
 } from './statusUpdate';
 import addTask from './add';
 import remove from './remove';
+import addNewDescription from './edit';
 
 if (module.hot) {
   module.hot.accept();
@@ -119,7 +118,10 @@ document.addEventListener('click', (e) => {
 document.addEventListener('keydown', (k) => {
   if (k.target.classList.contains('textArea') && k.key === 'Enter') {
     k.preventDefault();
-    addNewDescription(k.target);
+    const targetParent = k.target.closest('.task');
+    const editId = targetParent.getAttribute('id');
+    const newTextInput = targetParent.querySelector('.textArea').value;
+    addNewDescription(editId, newTextInput);
     toggleElements(k.target, '#fff');
   }
   if ((k.target.id === 'addTask') && k.key === 'Enter') {
