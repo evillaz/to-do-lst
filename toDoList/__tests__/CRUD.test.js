@@ -1,5 +1,8 @@
 import addTask from '../src/add';
 import remove from '../src/remove';
+import addNewDescription from '../src/edit';
+import changeStatus from '../src/updateStatus';
+import filterCompleted from '../src/clearAll';
 
 const localStorageMock = (() => {
   let store = {};
@@ -37,6 +40,16 @@ describe('remove', () => {
     remove(1);
     let finalLength = document.querySelectorAll('.task').length;
     expect(finalLength).toBe(1);
+  });
+});
+
+describe('edit', () => {
+  test('initial ', () => {
+    addTask('new task');
+    addTask('new task');
+    addNewDescription(2, "new desc");
+    const edittedTask = document.getElementById('2').querySelector('.labelText').innerText;
+    expect(edittedTask).toBe("new desc");
   });
 });
 

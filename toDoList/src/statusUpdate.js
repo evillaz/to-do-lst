@@ -10,6 +10,7 @@ const checkStatus = (checkBox) => {
 
 const changeStatus = (target) => {
   if (target.classList.contains('checkBox')) {
+    
     toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
     const parentNode = target.closest('.task');
     const taskID = parentNode.getAttribute('id') - 1;
