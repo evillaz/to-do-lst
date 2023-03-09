@@ -1,23 +1,24 @@
 import './style.css';
 import '@fortawesome/fontawesome-free/css/all.css';
-import ToDoList from './toDoList';
 import {
-  newTask, removeTask, addNewDescription, toggleElements,
+  addNewDescription, toggleElements,
 } from './CRUD';
 import {
   checkStatus,
   changeStatus,
   filterCompleted,
 } from './statusUpdate';
+import addTask from './add';
+import remove from './remove';
 
 if (module.hot) {
   module.hot.accept();
 }
 
-const toDoList = new ToDoList();
+let toDoTasks = JSON.parse(localStorage.getItem('toDoList')) || [];
 
 const list = document.getElementById('placeholder');
-
+const toDoListContainer = document.getElementById('toDoList');
 const addListContent = (toDoTask) => `<div class="inputHolder flex">
             <label class="custom-checkbox">
               <input type="checkbox" class="${toDoTask.completed} checkBox" id="taskItem${toDoTask.index}" name="taskItem${toDoTask.index}">
@@ -53,20 +54,21 @@ const setClearAll = () => {
   return clearAll;
 };
 
+toDoListContainer.appendChild(setClearAll());
+
 const loadToDoList = () => {
   list.innerHTML = '';
   if (localStorage.getItem('toDoList') == null) {
-    toDoList.toDoTasks = [];
+    toDoTasks = [];
   } else {
-    toDoList.toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
+    toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
   }
-  toDoList.toDoTasks = toDoList.toDoTasks.sort((a, b) => a.index - b.index);
-  localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
-  const arrayLength = toDoList.toDoTasks.length;
+  toDoTasks = toDoTasks.sort((a, b) => a.index - b.index);
+  localStorage.setItem('toDoList', JSON.stringify(toDoTasks));
+  const arrayLength = toDoTasks.length;
   for (let i = 0; i < arrayLength; i += 1) {
-    setToDoList(toDoList.toDoTasks[i]);
+    setToDoList(toDoTasks[i]);
   }
-  list.appendChild(setClearAll());
   const checkBoxes = document.querySelectorAll('.checkBox');
   checkBoxes.forEach((check) => {
     checkStatus(check);
@@ -79,9 +81,8 @@ const addBtn = document.getElementById('addButton');
 addBtn.addEventListener('click', (e) => {
   const parentContainer = e.target.closest('.addTasks');
   const taskDescriptionInput = parentContainer.querySelector('#addTask').value;
-  newTask(taskDescriptionInput);
+  addTask(taskDescriptionInput);
   parentContainer.querySelector('#addTask').value = '';
-  loadToDoList();
 });
 
 const taskContainer = document.querySelector('#placeholder');
@@ -92,13 +93,14 @@ taskContainer.addEventListener('click', (e) => {
   }
   if (e.target.matches('#trash')) {
     const removeID = e.target.closest('.task').getAttribute('id') - 1;
-    removeTask(removeID);
-    loadToDoList();
+    remove(removeID);
   }
-  if (e.target.matches('.clearAll')) {
-    filterCompleted();
-    loadToDoList();
-  }
+});
+
+const clearAllBtn = document.querySelector('.clearAll');
+clearAllBtn.addEventListener('click', () => {
+  filterCompleted();
+  loadToDoList();
 });
 
 document.addEventListener('click', (e) => {
@@ -124,9 +126,8 @@ document.addEventListener('keydown', (k) => {
     k.preventDefault();
     const parentContainer = k.target.closest('.addTasks');
     const taskDescriptionInput = parentContainer.querySelector('#addTask').value;
-    newTask(taskDescriptionInput);
+    addTask(taskDescriptionInput);
     parentContainer.querySelector('#addTask').value = '';
-    loadToDoList();
   }
 });
 
@@ -150,7 +151,7 @@ refreshButton.addEventListener('click', () => {
     refreshButton.style.transform = '';
   }, 300);
 
-  toDoList.toDoTasks = [];
-  localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
+  toDoTasks = [];
+  localStorage.setItem('toDoList', JSON.stringify(toDoTasks));
   loadToDoList();
 });

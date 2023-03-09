@@ -1,17 +1,4 @@
-import ToDoList from './toDoList';
-
-const toDoList = new ToDoList();
-
-const newTask = (description) => {
-  toDoList.toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
-  const completedDefault = false;
-  const index = toDoList.toDoTasks.length + 1;
-  toDoList.addTask(completedDefault, description, index);
-};
-
-const removeTask = (index) => {
-  toDoList.remove(index);
-};
+const toDoTasks = JSON.parse(localStorage.getItem('toDoList')) || [];
 
 const toggleHidden = (elements) => {
   elements.forEach((el) => {
@@ -33,13 +20,11 @@ const addNewDescription = (target) => {
   const newTextInput = targetParent.querySelector('.labelText');
   newTextInput.innerText = targetParent.querySelector('.textArea').value;
   const editedTaskID = targetParent.getAttribute('id') - 1;
-  toDoList.toDoTasks[editedTaskID].description = newTextInput.innerText;
-  localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
+  toDoTasks[editedTaskID].description = newTextInput.innerText;
+  localStorage.setItem('toDoList', JSON.stringify(toDoTasks));
 };
 
 export {
-  newTask,
-  removeTask,
   toggleElements,
   addNewDescription,
 };
