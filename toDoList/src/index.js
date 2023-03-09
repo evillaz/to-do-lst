@@ -9,6 +9,8 @@ import {
   changeStatus,
   filterCompleted,
 } from './statusUpdate';
+import { addTask } from './add';
+import { remove } from './remove';
 
 if (module.hot) {
   module.hot.accept();
@@ -17,7 +19,7 @@ if (module.hot) {
 const toDoList = new ToDoList();
 
 const list = document.getElementById('placeholder');
-
+const toDoListContainer = document.getElementById('toDoList');
 const addListContent = (toDoTask) => `<div class="inputHolder flex">
             <label class="custom-checkbox">
               <input type="checkbox" class="${toDoTask.completed} checkBox" id="taskItem${toDoTask.index}" name="taskItem${toDoTask.index}">
@@ -53,6 +55,8 @@ const setClearAll = () => {
   return clearAll;
 };
 
+toDoListContainer.appendChild(setClearAll());
+
 const loadToDoList = () => {
   list.innerHTML = '';
   if (localStorage.getItem('toDoList') == null) {
@@ -66,7 +70,6 @@ const loadToDoList = () => {
   for (let i = 0; i < arrayLength; i += 1) {
     setToDoList(toDoList.toDoTasks[i]);
   }
-  list.appendChild(setClearAll());
   const checkBoxes = document.querySelectorAll('.checkBox');
   checkBoxes.forEach((check) => {
     checkStatus(check);
@@ -79,9 +82,8 @@ const addBtn = document.getElementById('addButton');
 addBtn.addEventListener('click', (e) => {
   const parentContainer = e.target.closest('.addTasks');
   const taskDescriptionInput = parentContainer.querySelector('#addTask').value;
-  newTask(taskDescriptionInput);
+  addTask(taskDescriptionInput);
   parentContainer.querySelector('#addTask').value = '';
-  loadToDoList();
 });
 
 const taskContainer = document.querySelector('#placeholder');
@@ -92,8 +94,7 @@ taskContainer.addEventListener('click', (e) => {
   }
   if (e.target.matches('#trash')) {
     const removeID = e.target.closest('.task').getAttribute('id') - 1;
-    removeTask(removeID);
-    loadToDoList();
+    remove(removeID);
   }
   if (e.target.matches('.clearAll')) {
     filterCompleted();
@@ -124,9 +125,8 @@ document.addEventListener('keydown', (k) => {
     k.preventDefault();
     const parentContainer = k.target.closest('.addTasks');
     const taskDescriptionInput = parentContainer.querySelector('#addTask').value;
-    newTask(taskDescriptionInput);
+    addTask(taskDescriptionInput);
     parentContainer.querySelector('#addTask').value = '';
-    loadToDoList();
   }
 });
 
@@ -154,3 +154,5 @@ refreshButton.addEventListener('click', () => {
   localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
   loadToDoList();
 });
+
+export {  setToDoList };

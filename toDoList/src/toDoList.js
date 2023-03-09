@@ -1,17 +1,23 @@
-import Task from './task';
+class Task {
+  constructor(completed, description, index) {
+    this.completed = completed;
+    this.description = description;
+    this.index = index;
+  }
+}
 
 class ToDoList {
-  constructor() {
+  constructor() { 
     this.toDoTasks = JSON.parse(localStorage.getItem('toDoList')) || [];
   }
 
-  addTask(completed, description, index) {
-    if (completed !== '' && description !== '' && index !== '') {
-      const task = new Task(completed, description, index);
+  addTask(description) {
+      const completedDefault = false;
+      const index = this.toDoTasks.length + 1;
+      const task = new Task(completedDefault, description, index);
       this.toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
       this.toDoTasks.push(task);
       localStorage.setItem('toDoList', JSON.stringify(this.toDoTasks));
-    }
   }
 
   remove(field) {

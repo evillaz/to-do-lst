@@ -1,0 +1,17 @@
+import { addTask } from './add';
+import { remove } from './remove';
+const localStorageMock = (() => {
+  let store = {};
+  return {
+    getItem: (key) => store[key],
+    setItem: (key, value) => { store[key] = value.toString() },
+    clear: () => { store = {} }
+  };
+})();
+
+Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+
+beforeEach(() => {
+  localStorage.setItem('toDoList', JSON.stringify([]));
+  document.body.innerHTML = '<ul id="placeholder"></ul>';
+});
