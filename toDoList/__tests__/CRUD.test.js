@@ -71,6 +71,25 @@ describe('update status', () => {
   });
 });
 
+describe('clear all completed', () => {
+  beforeEach(() => {
+    addTask('new task');
+    addTask('new task');
+    addTask('new task');
+  });
+  test('before changing status ', () => {
+    const toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
+    expect(toDoTasks.length).toBe(3);
+  });
+  test('after changing status', () => {
+    changeStatus(1);
+    changeStatus(2);
+    filterCompleted();
+    const toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
+    expect(toDoTasks.length).toBe(1);
+  });
+});
+
 beforeEach(() => {
   localStorage.setItem('toDoList', JSON.stringify([]));
   document.body.innerHTML = '<ul id="placeholder"></ul>';
