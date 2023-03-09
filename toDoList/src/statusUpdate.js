@@ -1,6 +1,4 @@
-import ToDoList from './toDoList';
-
-const toDoList = new ToDoList();
+let toDoTasks = JSON.parse(localStorage.getItem('toDoList')) || [];
 
 const checkStatus = (checkBox) => {
   if (checkBox.classList.contains('true')) {
@@ -12,11 +10,11 @@ const checkStatus = (checkBox) => {
 
 const changeStatus = (target) => {
   if (target.classList.contains('checkBox')) {
-    toDoList.toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
+    toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
     const parentNode = target.closest('.task');
     const taskID = parentNode.getAttribute('id') - 1;
-    toDoList.toDoTasks[taskID].completed = !toDoList.toDoTasks[taskID].completed;
-    localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
+    toDoTasks[taskID].completed = !toDoTasks[taskID].completed;
+    localStorage.setItem('toDoList', JSON.stringify(toDoTasks));
   }
 };
 

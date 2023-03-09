@@ -25,8 +25,6 @@ const addNewDescription = (target) => {
 };
 
 export {
-  newTask,
-  removeTask,
   toggleElements,
   addNewDescription,
 };

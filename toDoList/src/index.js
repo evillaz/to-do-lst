@@ -1,22 +1,21 @@
 import './style.css';
 import '@fortawesome/fontawesome-free/css/all.css';
-import ToDoList from './toDoList';
 import {
-  newTask, removeTask, addNewDescription, toggleElements,
+  addNewDescription, toggleElements,
 } from './CRUD';
 import {
   checkStatus,
   changeStatus,
   filterCompleted,
 } from './statusUpdate';
-import { addTask } from './add';
-import { remove } from './remove';
+import addTask from './add';
+import remove from './remove';
 
 if (module.hot) {
   module.hot.accept();
 }
 
-const toDoList = new ToDoList();
+let toDoTasks = JSON.parse(localStorage.getItem('toDoList')) || [];
 
 const list = document.getElementById('placeholder');
 const toDoListContainer = document.getElementById('toDoList');
@@ -60,15 +59,15 @@ toDoListContainer.appendChild(setClearAll());
 const loadToDoList = () => {
   list.innerHTML = '';
   if (localStorage.getItem('toDoList') == null) {
-    toDoList.toDoTasks = [];
+    toDoTasks = [];
   } else {
-    toDoList.toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
+    toDoTasks = JSON.parse(localStorage.getItem('toDoList'));
   }
-  toDoList.toDoTasks = toDoList.toDoTasks.sort((a, b) => a.index - b.index);
-  localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
-  const arrayLength = toDoList.toDoTasks.length;
+  toDoTasks = toDoTasks.sort((a, b) => a.index - b.index);
+  localStorage.setItem('toDoList', JSON.stringify(toDoTasks));
+  const arrayLength = toDoTasks.length;
   for (let i = 0; i < arrayLength; i += 1) {
-    setToDoList(toDoList.toDoTasks[i]);
+    setToDoList(toDoTasks[i]);
   }
   const checkBoxes = document.querySelectorAll('.checkBox');
   checkBoxes.forEach((check) => {
@@ -96,10 +95,12 @@ taskContainer.addEventListener('click', (e) => {
     const removeID = e.target.closest('.task').getAttribute('id') - 1;
     remove(removeID);
   }
-  if (e.target.matches('.clearAll')) {
-    filterCompleted();
-    loadToDoList();
-  }
+});
+
+const clearAllBtn = document.querySelector('.clearAll');
+clearAllBtn.addEventListener('click', () => {
+  filterCompleted();
+  loadToDoList();
 });
 
 document.addEventListener('click', (e) => {
@@ -150,9 +151,7 @@ refreshButton.addEventListener('click', () => {
     refreshButton.style.transform = '';
   }, 300);
 
-  toDoList.toDoTasks = [];
-  localStorage.setItem('toDoList', JSON.stringify(toDoList.toDoTasks));
+  toDoTasks = [];
+  localStorage.setItem('toDoList', JSON.stringify(toDoTasks));
   loadToDoList();
 });
-
-export {  setToDoList };

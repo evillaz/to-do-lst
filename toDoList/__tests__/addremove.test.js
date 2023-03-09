@@ -1,5 +1,6 @@
-import { addTask } from './add';
-import { remove } from './remove';
+import addTask from '../src/add';
+import remove from '../src/remove';
+
 const localStorageMock = (() => {
   let store = {};
   return {

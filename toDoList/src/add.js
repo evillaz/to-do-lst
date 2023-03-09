@@ -1,8 +1,8 @@
 const addTask = (taskDescription) => {
   const toDoTasks = JSON.parse(localStorage.getItem('toDoList')) || [];
-  let completedDefault = false;
-  let taskIndex = toDoTasks.length + 1;
-  const task = {completed: completedDefault, description: taskDescription, index: taskIndex};
+  const completedDefault = false;
+  const taskIndex = toDoTasks.length + 1;
+  const task = { completed: completedDefault, description: taskDescription, index: taskIndex };
   toDoTasks.push(task);
   localStorage.setItem('toDoList', JSON.stringify(toDoTasks));
   const listItem = document.createElement('li');
@@ -25,6 +25,6 @@ const addTask = (taskDescription) => {
   listItem.id = task.index;
   const list = document.getElementById('placeholder');
   list.appendChild(listItem);
-}
+};
 
-export { addTask };
+export default addTask;
