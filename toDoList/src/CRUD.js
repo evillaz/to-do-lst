@@ -13,6 +13,4 @@ const toggleElements = (target, background) => {
   parentNode.style.backgroundColor = background;
 };
 
-export {
-  toggleElements
-};
+export default toggleElements;

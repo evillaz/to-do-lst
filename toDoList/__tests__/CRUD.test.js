@@ -94,5 +94,3 @@ beforeEach(() => {
   localStorage.setItem('toDoList', JSON.stringify([]));
   document.body.innerHTML = '<ul id="placeholder"></ul>';
 });
-
-

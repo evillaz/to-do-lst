@@ -1,7 +1,6 @@
 import './style.css';
 import '@fortawesome/fontawesome-free/css/all.css';
-import { toggleElements,
-} from './CRUD';
+import toggleElements from './CRUD';
 import {
   checkStatus,
   changeStatus,
